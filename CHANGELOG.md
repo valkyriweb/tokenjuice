@@ -2,13 +2,19 @@
 
 ## Unreleased
 
+## 0.7.1 - 2026-05-17
+
 ### Fixes
 
-- Route `node scripts/run-vitest.mjs` output through the Vitest reducer so Rolldown plugin-timing warnings do not drown out passing test summaries.
-- Add `--help`/`-h` output to the Codex log analysis script.
-- Match the real command after harmless terminal setup preludes such as `tt title` or `tmux select-pane -T`.
-- Route Claude Code through a `PreToolUse` Bash wrapper so Tokenjuice compacts the actual command result without appending duplicate `PostToolUse` context or bypassing Claude Code approvals.
-- Preserve CodeBuddy's native Bash approval flow when wrapping `PreToolUse` commands, and cover Claude Code plus CodeBuddy pre-tool rewrites in local host e2e.
-- Keep Tokenjuice's Codex hook compatible with current Codex hook and approval surfaces, including `hooks`, `PermissionRequest`, Windows commands, async hooks, and approval/sandbox doctor reporting.
+- Route `node scripts/run-vitest.mjs` output through the Vitest reducer so Rolldown plugin timing warnings do not drown out passing test summaries.
+- Match wrapped Bash commands after harmless terminal setup preludes such as `tt title` or `tmux select-pane -T`.
+- Route Claude Code through a `PreToolUse` Bash wrapper so Tokenjuice compacts the actual command result without duplicate `PostToolUse` context or approval-flow bypasses.
+- Preserve CodeBuddy's native Bash approval flow when wrapping `PreToolUse` commands.
+- Keep the Codex hook compatible with current Codex hook and approval surfaces, including `hooks`, `PermissionRequest`, Windows commands, async hooks, and approval/sandbox doctor reporting.
 - Compact whole JSON fallback output without dropping non-zero exit status.
 - Add timeout safety caps to Tokenjuice-installed Codex, Claude Code, and Copilot CLI hooks, with doctor warnings for stale entries.
+
+### Maintenance
+
+- Add `--help`/`-h` output to the Codex log analysis script.
+- Update CI to the Node 24-ready pnpm setup action and remove the stale Release Drafter input warning.
