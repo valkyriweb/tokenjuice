@@ -748,7 +748,7 @@ describe("runClaudeCodePreToolUseHook", () => {
     expect(response.hookSpecificOutput?.updatedInput?.description).toBe("check status");
     expect(response.hookSpecificOutput?.updatedInput?.timeout).toBe(120000);
     expect(response.hookSpecificOutput?.updatedInput?.run_in_background).toBe(false);
-    expect(response.hookSpecificOutput?.updatedInput?.command).toContain("/usr/local/bin/tokenjuice wrap --source claude-code --");
+    expect(response.hookSpecificOutput?.updatedInput?.command).toContain("/usr/local/bin/tokenjuice wrap --source claude-code --store --");
     expect(response.hookSpecificOutput?.updatedInput?.command).toContain(shellPath);
     expect(response.hookSpecificOutput?.updatedInput?.command).toContain("git status --short && pnpm test");
   });

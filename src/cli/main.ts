@@ -8,7 +8,7 @@ import { getArtifact, listArtifactMetadata, listArtifacts } from "../core/artifa
 import { buildAnalysisEntry, discoverCandidates, doctorArtifacts, statsArtifacts } from "../core/analysis.js";
 import { verifyBuiltinFixtures } from "../core/fixtures.js";
 import { parseReduceJsonRequest } from "../core/json-protocol.js";
-import { WRAP_AUTHORITATIVE_FOOTER } from "../core/compaction-metadata.js";
+import { buildWrapAuthoritativeFooter } from "../core/compaction-metadata.js";
 import { reduceExecution } from "../core/reduce.js";
 import { verifyRules } from "../core/rules.js";
 import { runWrappedCommand } from "../core/wrap.js";
@@ -438,7 +438,7 @@ async function runWrap(args: ParsedArgs): Promise<number> {
   return wrapped.exitCode;
 }
 
-function decorateWrapInlineText(result: WrapResult["result"], raw: boolean): string {
+export function decorateWrapInlineText(result: WrapResult["result"], raw: boolean): string {
   const { rawChars, reducedChars } = result.stats;
   if (raw || !result.compaction?.authoritative || reducedChars === 0 || reducedChars >= rawChars) {
     return result.inlineText;
@@ -446,7 +446,7 @@ function decorateWrapInlineText(result: WrapResult["result"], raw: boolean): str
   const footer = [
     "",
     "---",
-    WRAP_AUTHORITATIVE_FOOTER,
+    buildWrapAuthoritativeFooter(result.rawRef?.path),
   ].join("\n");
   return `${result.inlineText}${footer}`;
 }

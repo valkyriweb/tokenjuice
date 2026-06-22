@@ -187,13 +187,20 @@ export function buildWrappedCommand(params: {
   command: string;
   source?: string;
   nodePath?: string;
+  /** Persist the full, uncompacted output to a tokenjuice artifact so the
+   * compaction footer can point the agent at it instead of forcing a re-run. */
+  store?: boolean;
+  storeDir?: string;
 }): string {
   const nodePath = params.nodePath ?? process.execPath;
   const launcherCommand = params.wrapLauncher.endsWith(".js")
     ? `${shellQuote(nodePath)} ${shellQuote(params.wrapLauncher)}`
     : shellQuote(params.wrapLauncher);
   const sourceArgs = params.source ? ` --source ${shellQuote(params.source)}` : "";
-  return `${launcherCommand} wrap${sourceArgs} -- ${shellQuote(params.shellPath)} -lc ${shellQuote(params.command)}`;
+  const storeArgs = params.store
+    ? ` --store${params.storeDir ? ` --store-dir ${shellQuote(params.storeDir)}` : ""}`
+    : "";
+  return `${launcherCommand} wrap${sourceArgs}${storeArgs} -- ${shellQuote(params.shellPath)} -lc ${shellQuote(params.command)}`;
 }
 
 /**
