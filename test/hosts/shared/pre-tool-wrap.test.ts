@@ -250,6 +250,28 @@ describe("buildWrappedCommand", () => {
     expect(wrapped).toBe("/usr/local/bin/tokenjuice wrap --source cursor -- /bin/bash -lc 'git status --short'");
   });
 
+  it("adds --store (and --store-dir) so the full output is persisted", () => {
+    expect(
+      buildWrappedCommand({
+        wrapLauncher: "/usr/local/bin/tokenjuice",
+        shellPath: "/bin/bash",
+        command: "git status --short",
+        source: "claude-code",
+        store: true,
+      }),
+    ).toBe("/usr/local/bin/tokenjuice wrap --source claude-code --store -- /bin/bash -lc 'git status --short'");
+
+    expect(
+      buildWrappedCommand({
+        wrapLauncher: "/usr/local/bin/tokenjuice",
+        shellPath: "/bin/bash",
+        command: "git status --short",
+        store: true,
+        storeDir: "/var/tmp/tj",
+      }),
+    ).toBe("/usr/local/bin/tokenjuice wrap --store --store-dir /var/tmp/tj -- /bin/bash -lc 'git status --short'");
+  });
+
   it("escapes commands containing single quotes through POSIX shellQuote", () => {
     const wrapped = buildWrappedCommand({
       wrapLauncher: "/usr/local/bin/tokenjuice",

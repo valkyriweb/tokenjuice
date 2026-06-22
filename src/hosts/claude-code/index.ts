@@ -377,7 +377,7 @@ export async function runClaudeCodePreToolUseHook(rawText: string, wrapLauncher 
     return 0;
   }
 
-  const wrappedCommand = buildWrappedCommand({ wrapLauncher, shellPath, command, source: "claude-code" });
+  const wrappedCommand = buildWrappedCommand({ wrapLauncher, shellPath, command, source: "claude-code", store: true });
   const response = {
     hookSpecificOutput: {
       hookEventName: "PreToolUse",
