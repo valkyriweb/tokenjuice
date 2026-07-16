@@ -17,7 +17,7 @@ Tests live in `test/` and mirror the source layout (`test/core/`, `test/hosts/`,
 - `pnpm test` runs the full Vitest suite and regenerates built-in rules first.
 - `pnpm typecheck` runs TypeScript without emitting files.
 - `pnpm build` rebuilds `dist/`, Pi runtime output, and packaged rules.
-- `pnpm verify` is the pre-handoff gate: lint, circular-dep check (madge), typecheck, and the full Vitest suite.
+- `pnpm verify` is the pre-handoff gate: lint, circular-dep check (oxlint import/no-cycle), typecheck, and the full Vitest suite.
 - `pnpm release:local` runs the local release pipeline: tests, build, tarball, checksums, and Homebrew formula.
 - `pnpm exec vitest run test/hosts/codex.test.ts` runs a focused test file during iteration.
 
